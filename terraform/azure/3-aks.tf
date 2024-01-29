@@ -27,14 +27,13 @@ resource "azurerm_kubernetes_cluster" "main" {
     upgrade_settings {
       max_surge = "10%"
     }
+    vnet_subnet_id = azurerm_subnet.azureciliumnodes.id
+    pod_subnet_id  = azurerm_subnet.azureciliumpods.id
   }
 
   network_profile {
-    network_plugin = "kubenet"
-    network_policy = "calico"
-    dns_service_ip = "172.18.0.10"
-    pod_cidr       = "172.17.0.0/16"
-    service_cidr   = "172.18.0.0/16"
+    network_plugin = "azure"
+    ebpf_data_plane = "cilium"
 
 #    load_balancer_profile {
 #      outbound_ip_address_ids = [
