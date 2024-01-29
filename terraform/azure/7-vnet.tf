@@ -18,4 +18,10 @@ resource "azurerm_subnet" "azureciliumpods" {
   resource_group_name  = data.azurerm_resource_group.main.name
   virtual_network_name = azurerm_virtual_network.azurecilium.name
   address_prefixes     = ["10.241.0.0/16"]
+
+  lifecycle {
+    ignore_changes = [
+      delegation,
+    ]
+  }
 }
